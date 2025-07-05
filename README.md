@@ -29,3 +29,26 @@ This repo is for hands on experience for creating resources on Azure
     # Azure automatically provisions supporting infrastructure
 }
 
+KUBECTL COMMANDS - 
+
+to configure kubectl to access your cluster -> az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+
+ checking cluster information -> kubectl cluster-info
+
+ creating a pod -> kubectl run nginx --image=nginx
+
+ creating a deployment ->
+
+ replica set creation ->
+
+
+Creating alert for aks cluster cost consumption over $20
+az-cli
+1. create log analytics workspace 
+2. create cost alert on portal
+
+Testing if alert is working
+az monitor metrics alert list --resource-group myResourceGroup --output table
+
+
+

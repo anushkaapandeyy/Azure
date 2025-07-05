@@ -76,3 +76,16 @@ variable "common_tags" {
     Owner       = "Anushka"
   }
 }
+# log analytics workspace
+
+variable "log_analytics_workspace_name" {
+  default = "cost-monitoring-workspace"
+}
+
+variable "alert_email_address" {
+  default = "anushkaa.pandey1@gmail.com"
+}
+
+variable "cost_threshold" {
+  default = 20
+}
