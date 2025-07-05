@@ -2,7 +2,7 @@
 variable "resource_group_name" {
     description = "name of RG"
     type = string
-    default = "mgResourceGroup"
+    default = "myResourceGroup"
 }
 variable "location" {
     description = "azure region"
@@ -31,7 +31,7 @@ variable "subnet1_name" {
 variable "subnet1_address_prefixes" {
   description = "Address prefixes for the subnet"
   type        = list(string)
-  default     = ["10.0.1.0/24"]
+  default     = ["10.0.128.0/20"]
 }
 
 # AKS Variables
@@ -56,7 +56,7 @@ variable "aks1_node_count" {
 variable "aks1_vm_size" {
   description = "VM size for AKS nodes"
   type        = string
-  default     = "Standard_D2_v2"
+  default     = "standard_a2_v2"
   }
 
 # Subscription ID
