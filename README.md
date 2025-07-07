@@ -90,4 +90,3 @@ az monitor metrics alert list --resource-group myResourceGroup --output table
 
 ---
 
-Let me know if you want to include images, Terraform code blocks, or flow diagrams!
