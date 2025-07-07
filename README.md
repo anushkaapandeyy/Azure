@@ -121,9 +121,9 @@ resource "azurerm_kubernetes_cluster" "main" {
   kubectl run nginx --image=nginx
   ```
 
-- ⚙️ Create a Deployment *(You can add your specific command)*
+- ⚙️ Create a Deployment 
 
-- 📡 Replica Set Creation *(You can add your specific command)*
+- 📡 Replica Set Creation 
 
 ---
 
@@ -186,4 +186,7 @@ KubeEvents
 ```bash
 az monitor metrics alert list --resource-group myResourceGroup --output table
 ```
-```
+
+---
+
+Let me know if you want to include images, Terraform code blocks, or flow diagrams!
