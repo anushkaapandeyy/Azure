@@ -1,54 +1,93 @@
-# Azure
-This repo is for hands on experience for creating resources on Azure
+# ☁️ Azure - Hands-On Project 🚀
 
-1. Deployment of RG myResourceGroup under free trial 
-    1.a subscription ID - "75a79bec-3e88-4d48-99c4-d17a605f94c0"
-2. Deployment of Vnet under myResourceGroup RG 
-    2.a. name - myVirtualNetwork 
-    2.b. address space - 10.0.0.0/16
-3. Deployment of subnet under myVirtualNetwork
-    3.a name - mySubnet
-    3.b address space - 10.0.128.0/20
-4. Deployed AKS cluster 
-    4.a name - myAKSCluster
-    4.b Identity - System assigned (authorize access from an AKS cluster to other Azure services for example - you can grant permissions to a managed identity to access secrets in an Azure key vault for use by the cluster.)
-    4.c Automatically created infra resources - 
-    4.c.1 Load balancer - kubernetes - outbound NAT for clusters
-    4.c.2 Public IP address - e5289029-447c-4d11-88c8-635394b05a21 - outbound internet access for nodes, container image dowloads, API communication
-    4.c.3 Network security group - aks-agentpool-14693408-nsg - security rules, node to node communication
-    4.c.4 Virtual machine scale set - aks-default-22151992-vmss - worker nodes auto scalling capabilities
-    4.c.5 user assigned identity - myAKSCluster-agentpool -Node pool identity (separate from cluster identity)
-•  📋 Permissions for nodes to:
-◦  Pull images from ACR
-◦  Join the cluster
-◦  Access Azure resources
-◦  Communicate with load balance
-    # In your aks.tf - this implicitly creates the default infra
-    resource "azurerm_kubernetes_cluster" "main" {
-    # ... your config
-    # Azure automatically provisions supporting infrastructure
+Welcome! This repository documents a hands-on learning project for creating and managing Azure resources using Terraform and the Azure CLI.
+
+---
+
+## 🔧 Step-by-Step Deployments
+
+### 1️⃣ Resource Group (RG) Creation
+- 📁 **Resource Group Name**: `myResourceGroup`  
+- 🆓 **Deployed Under**: Free Trial Subscription  
+- 🆔 **Subscription ID**: `75a79bec-3e88-4d48-99c4-d17a605f94c0`
+
+---
+
+### 2️⃣ Virtual Network (VNet)
+- 🌐 **Name**: `myVirtualNetwork`  
+- 📍 **Address Space**: `10.0.0.0/16`  
+- 📦 **Resource Group**: `myResourceGroup`
+
+---
+
+### 3️⃣ Subnet Deployment
+- 🧱 **Name**: `mySubnet`  
+- 📍 **Address Range**: `10.0.128.0/20`  
+- 🌐 **Parent VNet**: `myVirtualNetwork`
+
+---
+
+### 4️⃣ Azure Kubernetes Service (AKS) Cluster
+- ☸️ **Cluster Name**: `myAKSCluster`  
+- 🆔 **Identity Type**: System Assigned (used to access other Azure resources like Key Vaults)  
+
+#### ⛓️ Automatically Created Infrastructure:
+- 🌀 **Load Balancer**: `kubernetes` (Handles outbound NAT for cluster)
+- 🌍 **Public IP**: `e5289029-447c-4d11-88c8-635394b05a21` (Allows image downloads & API communication)
+- 🔐 **NSG**: `aks-agentpool-14693408-nsg` (Controls traffic rules and node communication)
+- 🖥️ **VM Scale Set**: `aks-default-22151992-vmss` (Provides autoscaling for worker nodes)
+- 👥 **User Assigned Identity**: `myAKSCluster-agentpool` (For node pool identity)
+
+#### ✅ Permissions for Nodes:
+- 📥 Pull images from Azure Container Registry (ACR)  
+- 🔗 Join the AKS Cluster  
+- 🔐 Access other Azure Resources  
+- 🔁 Communicate with Load Balancer
+
+```hcl
+# aks.tf snippet
+resource "azurerm_kubernetes_cluster" "main" {
+  # Your AKS config here
+  # Azure will automatically provision supporting infra
 }
+```
 
-KUBECTL COMMANDS - 
+---
 
-to configure kubectl to access your cluster -> az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+## 🧪 `kubectl` Commands
 
- checking cluster information -> kubectl cluster-info
+- 🔐 Configure access to cluster:  
+  ```bash
+  az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+  ```
 
- creating a pod -> kubectl run nginx --image=nginx
+- ℹ️ Check cluster info:  
+  ```bash
+  kubectl cluster-info
+  ```
 
- creating a deployment ->
+- 📦 Create a Pod:  
+  ```bash
+  kubectl run nginx --image=nginx
+  ```
 
- replica set creation ->
+- ⚙️ Create a Deployment *(You can add your specific command)*
 
+- 📡 Replica Set Creation *(You can add your specific command)*
 
-Creating alert for aks cluster cost consumption over $20
-az-cli
-1. create log analytics workspace 
-2. create cost alert on portal
+---
 
-Testing if alert is working
+## 💰 Cost Alert Setup (Over $20)
+
+### Step-by-Step:
+1. 📊 **Create a Log Analytics Workspace**
+2. 🛎️ **Set Cost Alert** via Azure Portal
+
+### ✅ Test Alert via CLI:
+```bash
 az monitor metrics alert list --resource-group myResourceGroup --output table
+```
 
+---
 
-
+Let me know if you want to include images, Terraform code blocks, or flow diagrams!
