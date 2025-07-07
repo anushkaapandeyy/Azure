@@ -133,47 +133,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 - 🏢 **Workspace Name**: `cost-monitoring-workspace`
 - 💾 **Data Retention**: 90 days (configurable)
 - 💵 **Pricing Tier**: `PerGB2018` (pay-as-you-go)
-- 📍 **Purpose**: Centralized logging and monitoring for all Azure resources
-
-### 🔍 Container Insights Integration
-- ☸️ **AKS Monitoring**: Enabled via `oms_agent` configuration
-- 📊 **Metrics Collected**:
-  - Node performance (CPU, memory, disk, network)
-  - Pod performance and resource usage
-  - Container logs and application insights
-  - Cluster health and inventory data
-
-### 🚨 Alert Configuration
-- 📧 **Email Notifications**: `anushkaa.pandey1@gmail.com`
-- ⚡ **Alert Types**:
-  - High CPU usage (>80%)
-  - High memory usage (>85%)
-  - Pod restart frequency alerts
-  - Cost threshold alerts (>$20)
-
-### 📋 Available Queries (KQL Examples):
-```kql
-// Top CPU consuming containers
-ContainerInventory
-| where TimeGenerated > ago(1h)
-| summarize avg(cpuUsage) by ContainerName
-| top 10 by avg_cpuUsage
-
-// Failed pod events
-KubeEvents
-| where TimeGenerated > ago(1h)
-| where Reason == "Failed"
-| project TimeGenerated, Namespace, Name, Message
-```
-
-### 🎯 Monitoring Benefits:
-- **Proactive Issue Detection**: Alerts before problems become critical
-- **Performance Optimization**: Identify resource bottlenecks
-- **Cost Management**: Track resource usage and spending
-- **Security Monitoring**: Detect suspicious activities
-- **Compliance**: Maintain audit logs for governance
-
----
+- 📍 **Purpose**: Centralized logging and monitoring for all Azure resource
 
 ## 💰 Cost Alert Setup (Over $20)
 
