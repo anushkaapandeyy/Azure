@@ -4,6 +4,8 @@ variable "resource_group_name" {
     type = string
     default = "myResourceGroup"
 }
+
+#use azurerm_resource_group.my_rg.location for always picking my_rg's location
 variable "location" {
     description = "azure region"
     type = string
@@ -88,4 +90,11 @@ variable "alert_email_address" {
 
 variable "cost_threshold" {
   default = 20
+}
+
+#nsg
+variable "nsg_name" {
+  description = "Name of the Network Security Group"
+  type = string
+  default = "myNetworkSecurityGroup"
 }
