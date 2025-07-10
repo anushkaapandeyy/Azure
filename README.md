@@ -88,20 +88,6 @@ resource "azurerm_subnet_network_security_group_association" "main" {
 - 🖥️ **VM Scale Set**: `aks-default-22151992-vmss` (Provides autoscaling for worker nodes)
 - 👥 **User Assigned Identity**: `myAKSCluster-agentpool` (For node pool identity)
 
-#### ✅ Permissions for Nodes:
-- 📥 Pull images from Azure Container Registry (ACR)  
-- 🔗 Join the AKS Cluster  
-- 🔐 Access other Azure Resources  
-- 🔁 Communicate with Load Balancer
-
-```hcl
-# aks.tf snippet
-resource "azurerm_kubernetes_cluster" "main" {
-  # Your AKS config here
-  # Azure will automatically provision supporting infra
-}
-```
-
 ---
 
 ## 🧪 `kubectl` Commands
