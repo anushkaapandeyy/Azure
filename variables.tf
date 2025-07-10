@@ -18,6 +18,19 @@ variable "vnet1_name" {
     default = "myVirtualNetwork"
 }
 
+variable "state_rg_name" {
+    description = "name of state storage account"
+    type = string
+    default = "terraform-state-rg"
+}
+
+variable "state_sa_name" {
+    description = "name of state storage account"
+    type = string
+    default = "terraform-state-sa"
+}
+
+
 variable "vnet1_address_space" {
     description = "Address space for the virtual network"
     type        = list(string)
