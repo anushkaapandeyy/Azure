@@ -28,7 +28,3 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        # For production, replace with manual approval or remove this step
