@@ -1,17 +1,18 @@
-resource "azurerm_resource_group" "terraform-state"{
-    name = var.state_rg_name
+resource "azurerm_resource_group" "terraform_state" {
+    name = "terraform-state-rg"
     location = "East US"
 }
 
-resource "azurerm_storage_account" "terraform-state" {
-  name = var.state_sa_name
-  resource_group_name = azurerm_resource_group.terraform-state
-  location = azurerm_resource_group.terraform-state.location
+resource "azurerm_storage_account" "terraform_state" {
+  name = "storageaccounttfstate"
+  resource_group_name = azurerm_resource_group.terraform_state.name
+  location = azurerm_resource_group.terraform_state.location
   account_tier = "Standard"
   account_replication_type = "LRS"
 }
-#container
-resource "azurerm_storage_container" "terraform-state" {
+
+# Container for storing Terraform state
+resource "azurerm_storage_container" "terraform_state" {
   name                  = "tfstate"
   storage_account_name  = azurerm_storage_account.terraform_state.name
   container_access_type = "private"
