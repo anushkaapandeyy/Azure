@@ -22,9 +22,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-      - name: Remove backend config for CI/CD
-        run: rm -f backend.tf
 
       - name: Terraform Init
         run: terraform init
