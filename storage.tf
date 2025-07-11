@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "terraform_state" {
 }
 
 resource "azurerm_storage_account" "terraform_state" {
-  name = "storageaccounttfstate"
+  name = "storageaccounttfaap"
   resource_group_name = azurerm_resource_group.terraform_state.name
   location = azurerm_resource_group.terraform_state.location
   account_tier = "Standard"
