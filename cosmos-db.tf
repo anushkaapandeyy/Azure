@@ -31,7 +31,7 @@ resource "azurerm_cosmosdb_sql_container" "requests_container" {
   resource_group_name = azurerm_resource_group.my_rg.name
   account_name        = azurerm_cosmosdb_account.cras_cosmos.name
   database_name       = azurerm_cosmosdb_sql_database.cras_db.name
-  partition_key_paths  = "/requestId" #distribute data across partitions
+  partition_key_paths  = ["/requestId"]
   
   indexing_policy {
     indexing_mode = "consistent"
