@@ -87,7 +87,7 @@ variable "common_tags" {
   type        = map(string)
   default = {
     Environment = "Development"
-    Project     = "AKS-Learning"
+    Project     = "CRAS"
     Owner       = "Anushka"
   }
 }
@@ -110,4 +110,29 @@ variable "nsg_name" {
   description = "Name of the Network Security Group"
   type = string
   default = "myNetworkSecurityGroup"
+}
+
+# Databases for storing resource requests, user data, approval status
+variable "cosmos_name" {
+  description = "Name of the Cosmos DB account"
+  type        = string
+  default     = "cras-cosmos"
+}
+
+variable "cosmos_db_database_name" {
+  description = "Name of the Cosmos DB database"
+  type        = string
+  default     = "cras-db"
+}
+
+variable "cosmosdb_sql_container_name" {
+  description = "Name of the Cosmos DB SQL container"
+  type        = string
+  default     = "requests-container"
+}
+
+variable "acr_name" {
+  description = "Name of the Azure Container Registry"
+  type        = string
+  default     = "cras-acr"
 }
