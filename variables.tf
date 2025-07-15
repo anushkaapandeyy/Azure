@@ -27,7 +27,7 @@ variable "state_rg_name" {
 variable "state_sa_name" {
     description = "name of state storage account"
     type = string
-    default = "terraform-state-sa"
+    default = "terraformstatesa"
 }
 
 
@@ -134,5 +134,5 @@ variable "cosmosdb_sql_container_name" {
 variable "acr_name" {
   description = "Name of the Azure Container Registry"
   type        = string
-  default     = "cras-acr"
+  default     = "crasacr"
 }
