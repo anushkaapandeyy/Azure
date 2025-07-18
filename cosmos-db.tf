@@ -2,7 +2,7 @@
 resource "azurerm_cosmosdb_account" "cras_cosmos" {
   name                = var.cosmos_name
   resource_group_name = azurerm_resource_group.my_rg.name
-  location            = azurerm_resource_group.my_rg.location
+  location            = "West US 2"
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
   
@@ -11,7 +11,7 @@ resource "azurerm_cosmosdb_account" "cras_cosmos" {
   }
 
   geo_location {
-    location          = azurerm_resource_group.my_rg.location
+    location          = "West US 2"
     failover_priority = 0
   }
   

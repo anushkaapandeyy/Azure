@@ -116,7 +116,7 @@ variable "nsg_name" {
 variable "cosmos_name" {
   description = "Name of the Cosmos DB account"
   type        = string
-  default     = "cras-cosmos"
+  default     = "cras-cosmos-db"
 }
 
 variable "cosmos_db_database_name" {
@@ -135,4 +135,23 @@ variable "acr_name" {
   description = "Name of the Azure Container Registry"
   type        = string
   default     = "crasacr"
+}
+
+# Key Vault Variables
+variable "key_vault_name" {
+  description = "Name of the Azure Key Vault"
+  type        = string
+  default     = "cras-keyvault"
+}
+
+variable "tenant_id" {
+  description = "Azure AD Tenant ID"
+  type        = string
+  default     = "ac423623-0fce-4e1c-9912-67cca1db6b45"
+}
+
+variable "admin_object_id" {
+  description = "Object ID of the admin user"
+  type        = string
+  default     = "8a77e406-2b4b-4e3b-907f-9dc9c57d64d6"
 }
