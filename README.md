@@ -135,4 +135,96 @@ az monitor metrics alert list --resource-group myResourceGroup --output table
 
 ---
 
+---
+
+## 🚀 Cloud Resource Access Request System (CRARS)
+
+This project includes a full-stack web application for managing Azure resource access requests.
+
+### 📁 Project Structure
+```
+├── backend/                 # Node.js Express API server
+│   ├── app.js              # Main application file
+│   ├── package.json        # Backend dependencies
+│   └── Dockerfile          # Container configuration
+├── access-request-frontend/ # React.js frontend application
+│   ├── src/                # React components and logic
+│   ├── public/             # Static assets
+│   └── package.json        # Frontend dependencies
+└── *.tf                    # Terraform infrastructure files
+```
+
+### 🔧 Application Setup
+
+#### Backend (Node.js + Express)
+- **Port**: 3000
+- **Framework**: Express.js with CORS enabled
+- **Dependencies**: express, cors
+- **API Endpoints**:
+  - `GET /health` - Health check endpoint
+  - `POST /api/request` - Submit access requests
+
+#### Frontend (React.js)
+- **Port**: 3001 (default React dev server)
+- **Framework**: React 19.1.0
+- **Dependencies**: react, react-dom, axios
+- **Features**: Access request form with validation
+
+### 🏃‍♂️ Running the Application
+
+#### Prerequisites
+- Node.js (v18+)
+- npm
+
+#### Backend Setup
+```bash
+cd backend
+npm install
+npm start
+```
+
+#### Frontend Setup
+```bash
+cd access-request-frontend
+npm install
+npm start
+```
+
+### 🌐 API Documentation
+
+#### Submit Access Request
+**Endpoint**: `POST /api/request`
+
+**Request Body**:
+```json
+{
+  "email": "user@example.com",
+  "subscription": "Production Subscription",
+  "role": "Reader",
+  "justification": "Need access to review resource configurations"
+}
+```
+
+**Response**:
+```json
+{
+  "message": "Access request submitted successfully!",
+  "requestId": "REQ-1234567890",
+  "status": "pending"
+}
+```
+
+### 🔒 Security Features
+- CORS configured for cross-origin requests
+- Input validation on all API endpoints
+- Request logging for audit trails
+- Secure form handling with proper error management
+
+### 🐳 Containerization
+- Backend includes Dockerfile for container deployment
+- Ready for Kubernetes deployment with provided YAML files
+- Configured for Azure Container Registry integration
+
+---
+
 Let me know if you want to include images, Terraform code blocks, or flow diagrams!
