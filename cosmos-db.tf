@@ -37,7 +37,7 @@ resource "azurerm_cosmosdb_sql_container" "requests_container" {
     indexing_mode = "consistent"
     
     included_path {
-      path = "/*"
+      path = "/*" //Index ALL properties id,email,subs,role etc in your JSON documents
     }
   }
 }
