@@ -1,6 +1,6 @@
 # ☁️ Cloud Resource Access Request System (CRARS)
 
-Welcome to the Azure Access Request System repository! This project is a full-stack application that allows users to request access to Azure resources and enables administrators to approve or reject those requests with automatic RBAC (Role-Based Access Control) assignment using Azure SDK.
+Welcome to the Cloud Resource Access Request System! This project is a full-stack application that allows users to request access to Azure resources and enables administrators to approve or reject those requests with automatic RBAC (Role-Based Access Control) assignment using Azure SDK.
 Please find working dashboard screenshots in a seperate folder in the repo
 
 ---
