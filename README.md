@@ -1,6 +1,7 @@
-# ☁️ Azure Access Request System (CRARS)
+# ☁️ Cloud Resource Access Request System (CRARS)
 
 Welcome to the Azure Access Request System repository! This project is a full-stack application that allows users to request access to Azure resources and enables administrators to approve or reject those requests with automatic RBAC (Role-Based Access Control) assignment using Azure SDK.
+Please find working dashboard screenshots in a seperate folder in the repo
 
 ---
 
@@ -18,14 +19,21 @@ A hands-on project that:
 
 ## 🗂️ Repository Structure
 
-├── backend/ # Express API server
-│ ├── app.js # Main RBAC logic and endpoints
-│ ├── .env.example # Sample environment config
-│ └── Dockerfile # Backend container config
-├── access-request-frontend/ # React frontend
-│ ├── src/ # React components
-│ └── package.json # Frontend dependencies
-└── *.tf # Terraform infrastructure files
+backend/ # Express API server
+
+   -app.js # Main RBAC logic and endpoints
+   
+   -.env.example # Sample environment config
+   
+   -Dockerfile # Backend container config
+   
+access-request-frontend/ # React frontend
+
+   -src/ # React components
+   
+   -package.json # Frontend dependencies
+   
+   -*.tf # Terraform infrastructure files
 
 ---
 
@@ -61,51 +69,77 @@ A hands-on project that:
 
 
 1. Clone the project
-```bash
-git clone 
+   
+git clone "https://github.com/anushkaapandeyy/Azure"
 
 2. Configure Environment Variables
 cd backend
-cp .env
-# Edit .env with:
-# AZURE_SUBSCRIPTION_ID, USER_PRINCIPAL_ID (or implement lookup)
-# COSMOS_DB_ENDPOINT, COSMOS_DB_KEY
 
-3. Install Dependencies 
-# Backend
+cd .env
+
+ 3. Edit .env with:
+ 
+ AZURE_SUBSCRIPTION_ID, USER_PRINCIPAL_ID (or implement lookup)
+ 
+ COSMOS_DB_ENDPOINT, COSMOS_DB_KEY
+
+ 4. Install Dependencies
+
+ Backend
+
 cd backend
+
 npm install
 
-# Frontend
+ Frontend
+ 
 cd ../access-request-frontend
+
 npm install
 
-4. Authenticate with Azure
+5. Authenticate with Azure
+   
 az login
+
 az account set --subscription <your-subscription-id>
 
-5. Deploy Azure Infra
+6. Deploy Azure Infra
+   
 terraform init
+
 terraform plan
+
 terraform apply
 
-6. Start the App
-# Backend
+7. Start the App
+ 
+ Backend
+
 cd backend
+
 npm start
 
-# Frontend (in new terminal)
+Frontend (in new terminal)
+
 cd access-request-frontend
+
 npm start
+
 
 📌 Role Assignment Details
-Role Definitions Supported
-Role	Definition ID
-Reader	acdd72a7-3385-48ef-bd42-f606fba81ae7
-Contributor	b24988ac-6180-42a0-ab88-20f7382dd24c
-Owner	8e3af657-a8ff-443c-a75c-2fe8c4bcb635
 
-Why UUID is Used
+Role Definitions Supported
+
+Role	             Definition ID
+
+Reader	           acdd72a7-3385-48ef-bd42-f606fba81ae7
+
+Contributor	       b24988ac-6180-42a0-ab88-20f7382dd24c
+
+Owner	             8e3af657-a8ff-443c-a75c-2fe8c4bcb635
+
+# Why UUID is Used - 
+
 Each role assignment in Azure requires a unique ID
 
 The backend uses uuidv4() to generate this ID when creating assignments
@@ -120,7 +154,9 @@ Pass the UUID as the roleAssignmentName in the roleAssignments.create() method
 
 Provide the necessary scope, principalId, and roleDefinitionId
 
-Additionally, this project uses Azure Cosmos DB as the backend database to store access requests. Cosmos DB stores details like:
+Additionally, this project uses Azure Cosmos DB as the backend database to store access requests. 
+
+# Cosmos DB stores details like:
 
 User ID
 
@@ -136,7 +172,7 @@ Timestamps and audit metadata
 
 Cosmos DB is ideal here due to its flexible schema, low latency, and global availability, making it perfect for scalable access tracking.
 
-🔐 Security Practices
+# Security Practices
 CORS enabled for frontend-backend communication
 
 Input validation on API endpoints
@@ -145,26 +181,36 @@ Logging of actions for audit trail
 
 Admin-only actions protected (authentication recommended in production)
 
-🧪 Testing
+# Testing
 Submitting a Request
+
 Fill the form in the user portal and submit
 
 Approving a Request
+
 Switch to admin dashboard
 
 Approve the request to trigger Azure role assignment
 
 Rejecting a Request
+
 Reject with an optional reason
 
-🛠 Troubleshooting
+# Troubleshooting
+
 Issue	Solution
+
 USER_PRINCIPAL_ID not set	Set manually or implement email-to-ID lookup via Microsoft Graph
+
 RBAC assignment failed	Ensure service principal has "User Access Administrator" role
+
 Cosmos DB errors	Check connection string in .env
+
 CORS issues	Confirm backend has CORS enabled (dev mode allows all origins)
 
+
 📈 Success Criteria
+
 ✅ Users can request access with proper validation
 
 ✅ Admins can approve and assign Azure RBAC roles
@@ -176,6 +222,7 @@ CORS issues	Confirm backend has CORS enabled (dev mode allows all origins)
 ✅ Modern, responsive UI works across devices
 
 🙌 Acknowledgements
+
 Azure SDK for JavaScript
 
 Microsoft Learn & Docs
