@@ -1,230 +1,184 @@
-# ☁️ Azure - Hands-On Project 🚀
+# ☁️ Azure Access Request System (CRARS)
 
-Welcome! This repository documents a hands-on learning project for creating and managing Azure resources using Terraform and the Azure CLI.
-
----
-
-## 🔧 Step-by-Step Deployments
-
-### 1️⃣ Resource Group (RG) Creation
-- 📁 **Resource Group Name**: `myResourceGroup`  
-- 🆓 **Deployed Under**: Free Trial Subscription  
-- 🆔 **Subscription ID**: `75a79bec-3e88-4d48-99c4-d17a605f94c0`
+Welcome to the Azure Access Request System repository! This project is a full-stack application that allows users to request access to Azure resources and enables administrators to approve or reject those requests with automatic RBAC (Role-Based Access Control) assignment using Azure SDK.
 
 ---
 
-### 2️⃣ Virtual Network (VNet)
-- 🌐 **Name**: `myVirtualNetwork`  
-- 📍 **Address Space**: `10.0.0.0/16`  
-- 📦 **Resource Group**: `myResourceGroup`
+## 📦 Project Overview
+
+A hands-on project that:
+
+- Uses **Terraform** to provision core Azure infrastructure
+- Hosts a **Node.js (Express)** backend with Azure SDK integration
+- Features a **React.js** frontend with a modern UI for users and admins
+- Implements **Azure RBAC** role assignments dynamically
+- Provides **audit logging** and **role validation**
 
 ---
 
-### 3️⃣ Subnet Deployment
-- 🧱 **Name**: `mySubnet`  
-- 📍 **Address Range**: `10.0.128.0/20`  
-- 🌐 **Parent VNet**: `myVirtualNetwork`
+## 🗂️ Repository Structure
+
+├── backend/ # Express API server
+│ ├── app.js # Main RBAC logic and endpoints
+│ ├── .env.example # Sample environment config
+│ └── Dockerfile # Backend container config
+├── access-request-frontend/ # React frontend
+│ ├── src/ # React components
+│ └── package.json # Frontend dependencies
+└── *.tf # Terraform infrastructure files
 
 ---
 
-### 4️⃣ Network Security Groups (NSG)
-- 🛡️ **Purpose**: Virtual firewall controlling network traffic to/from Azure resources
-- 🔒 **Security Layer**: Application-level traffic filtering for subnets and network interfaces
-- 📍 **Location**: Associated with subnets and individual VMs for granular control
+## 🚀 Features
 
-#### 🚦 Security Rules Configuration:
+### 🌐 User Portal
 
-##### **Inbound Rules** (Traffic Coming IN):
-- 🌐 **HTTP (Port 80)**: Allows web traffic from internet to web servers
-  - Priority: `1001` | Protocol: `TCP` | Source: `*` (Any)
-  - Use Case: Public website access, load balancer health checks
+- Simple form to request access to Azure subscriptions
+- Role selection: Reader, Contributor, Owner
+- Justification field for approvals
 
-- 🔐 **HTTPS (Port 443)**: Allows secure web traffic with SSL/TLS encryption
-  - Priority: `1002` | Protocol: `TCP` | Source: `*` (Any)
-  - Use Case: Secure web applications, API endpoints, e-commerce
+### 🔒 Admin Dashboard
 
-- 🔑 **SSH (Port 22)**: Allows secure remote access to Linux servers
-  - Priority: `1003` | Protocol: `TCP` | Source: `Admin IPs Only`
-  - ⚠️ **Security Note**: Should be restricted to admin networks, not `*`
+- View pending requests
+- Approve with automatic Azure RBAC assignment
+- Reject with reason tracking
+- Audit trail for every action
 
-##### **Best Practice Priority Ranges**:
-- `100-199`: Critical security/deny rules
-- `200-999`: Specific allow rules (SSH, database access)
-- `1000-1999`: Application-specific ports
-- `2000-2999`: Internal network communication
-- `3000-3999`: Monitoring and management
-- `4000-4096`: Catch-all deny rules
+### ⚙️ Azure RBAC Integration
 
-#### 🔄 NSG Association:
-```hcl
-# Associate NSG with subnet
-resource "azurerm_subnet_network_security_group_association" "main" {
-  subnet_id                 = azurerm_subnet.my_subnet.id
-  network_security_group_id = azurerm_network_security_group.main.id
-}
-```
+- Uses `@azure/arm-authorization` SDK
+- Supports assigning built-in roles via Azure API
+- UUID (`uuidv4()`) used to generate unique role assignment IDs
 
-#### 🛠️ Common Use Cases:
-- **Web Tier**: Allow HTTP/HTTPS from internet, SSH from admin networks
-- **App Tier**: Allow application ports from web tier only
-- **Database Tier**: Allow database ports from app tier, deny internet access
-- **Management**: Allow SSH/RDP from admin networks for troubleshooting
+### 📊 Infrastructure Monitoring
 
-#### 🔍 Protocol Selection:
-- **TCP**: Web traffic, databases, file transfers (reliable, ordered delivery)
-- **UDP**: DNS queries, NTP time sync (fast, simple requests)
-- **ICMP**: Network diagnostics, ping, traceroute
+- Log Analytics Workspace for centralized logging
+- Cost alerting using Azure Monitor
 
 ---
 
-### 5️⃣ Azure Kubernetes Service (AKS) Cluster
-- ☸️ **Cluster Name**: `myAKSCluster`  
-- 🆔 **Identity Type**: System Assigned (used to access other Azure resources like Key Vaults)  
+## ⚙️ Setup Instructions
 
-#### ⛓️ Automatically Created Infrastructure:
-- 🌀 **Load Balancer**: `kubernetes` (Handles outbound NAT for cluster)
-- 🌍 **Public IP**: `e5289029-447c-4d11-88c8-635394b05a21` (Allows image downloads & API communication)
-- 🔐 **NSG**: `aks-agentpool-14693408-nsg` (Controls traffic rules and node communication)
-- 🖥️ **VM Scale Set**: `aks-default-22151992-vmss` (Provides autoscaling for worker nodes)
-- 👥 **User Assigned Identity**: `myAKSCluster-agentpool` (For node pool identity)
 
----
-
-## 🧪 `kubectl` Commands
-
-- 🔐 Configure access to cluster:  
-  ```bash
-  az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
-  ```
-
-- ℹ️ Check cluster info:  
-  ```bash
-  kubectl cluster-info
-  ```
-
-- 📦 Create a Pod:  
-  ```bash
-  kubectl run nginx --image=nginx
-  ```
-
-- ⚙️ Create a Deployment 
-
-- 📡 Replica Set Creation 
-
----
-
-## 📊 Monitoring & Log Analytics
-
-### 📈 Log Analytics Workspace
-- 🏢 **Workspace Name**: `cost-monitoring-workspace`
-- 💾 **Data Retention**: 90 days (configurable)
-- 💵 **Pricing Tier**: `PerGB2018` (pay-as-you-go)
-- 📍 **Purpose**: Centralized logging and monitoring for all Azure resource
-
-## 💰 Cost Alert Setup (Over $20)
-
-### Step-by-Step:
-1. 📊 **Create a Log Analytics Workspace**
-2. 🛎️ **Create action group** via Azure Portal
-3.  🛎️ **Create alert** via Azure Portal
-
-### ✅ Test Alert via CLI:
+1. Clone the project
 ```bash
-az monitor metrics alert list --resource-group myResourceGroup --output table
-```
+git clone 
 
----
+2. Configure Environment Variables
+cd backend
+cp .env
+# Edit .env with:
+# AZURE_SUBSCRIPTION_ID, USER_PRINCIPAL_ID (or implement lookup)
+# COSMOS_DB_ENDPOINT, COSMOS_DB_KEY
 
----
-
-## 🚀 Cloud Resource Access Request System (CRARS)
-
-This project includes a full-stack web application for managing Azure resource access requests.
-
-### 📁 Project Structure
-```
-├── backend/                 # Node.js Express API server
-│   ├── app.js              # Main application file
-│   ├── package.json        # Backend dependencies
-│   └── Dockerfile          # Container configuration
-├── access-request-frontend/ # React.js frontend application
-│   ├── src/                # React components and logic
-│   ├── public/             # Static assets
-│   └── package.json        # Frontend dependencies
-└── *.tf                    # Terraform infrastructure files
-```
-
-### 🔧 Application Setup
-
-#### Backend (Node.js + Express)
-- **Port**: 3000
-- **Framework**: Express.js with CORS enabled
-- **Dependencies**: express, cors
-- **API Endpoints**:
-  - `GET /health` - Health check endpoint
-  - `POST /api/request` - Submit access requests
-
-#### Frontend (React.js)
-- **Port**: 3001 (default React dev server)
-- **Framework**: React 19.1.0
-- **Dependencies**: react, react-dom, axios
-- **Features**: Access request form with validation
-
-### 🏃‍♂️ Running the Application
-
-#### Prerequisites
-- Node.js (v18+)
-- npm
-
-#### Backend Setup
-```bash
+3. Install Dependencies 
+# Backend
 cd backend
 npm install
-npm start
-```
 
-#### Frontend Setup
-```bash
-cd access-request-frontend
+# Frontend
+cd ../access-request-frontend
 npm install
+
+4. Authenticate with Azure
+az login
+az account set --subscription <your-subscription-id>
+
+5. Deploy Azure Infra
+terraform init
+terraform plan
+terraform apply
+
+6. Start the App
+# Backend
+cd backend
 npm start
-```
 
-### 🌐 API Documentation
+# Frontend (in new terminal)
+cd access-request-frontend
+npm start
 
-#### Submit Access Request
-**Endpoint**: `POST /api/request`
+📌 Role Assignment Details
+Role Definitions Supported
+Role	Definition ID
+Reader	acdd72a7-3385-48ef-bd42-f606fba81ae7
+Contributor	b24988ac-6180-42a0-ab88-20f7382dd24c
+Owner	8e3af657-a8ff-443c-a75c-2fe8c4bcb635
 
-**Request Body**:
-```json
-{
-  "email": "user@example.com",
-  "subscription": "Production Subscription",
-  "role": "Reader",
-  "justification": "Need access to review resource configurations"
-}
-```
+Why UUID is Used
+Each role assignment in Azure requires a unique ID
 
-**Response**:
-```json
-{
-  "message": "Access request submitted successfully!",
-  "requestId": "REQ-1234567890",
-  "status": "pending"
-}
-```
+The backend uses uuidv4() to generate this ID when creating assignments
 
-### 🔒 Security Features
-- CORS configured for cross-origin requests
-- Input validation on all API endpoints
-- Request logging for audit trails
-- Secure form handling with proper error management
+This is not the user ID or role ID — it is the role assignment object's ID, which is a unique identifier required by Azure to track each role assignment independently.
 
-### 🐳 Containerization
-- Backend includes Dockerfile for container deployment
-- Ready for Kubernetes deployment with provided YAML files
-- Configured for Azure Container Registry integration
+The Azure SDK (@azure/arm-authorization) is used to make authorized API calls to Azure, allowing us to:
 
----
+Create RBAC assignments programmatically
 
-Let me know if you want to include images, Terraform code blocks, or flow diagrams!
+Pass the UUID as the roleAssignmentName in the roleAssignments.create() method
+
+Provide the necessary scope, principalId, and roleDefinitionId
+
+Additionally, this project uses Azure Cosmos DB as the backend database to store access requests. Cosmos DB stores details like:
+
+User ID
+
+Requested Role
+
+Subscription ID
+
+Justification
+
+Status (pending, approved, rejected)
+
+Timestamps and audit metadata
+
+Cosmos DB is ideal here due to its flexible schema, low latency, and global availability, making it perfect for scalable access tracking.
+
+🔐 Security Practices
+CORS enabled for frontend-backend communication
+
+Input validation on API endpoints
+
+Logging of actions for audit trail
+
+Admin-only actions protected (authentication recommended in production)
+
+🧪 Testing
+Submitting a Request
+Fill the form in the user portal and submit
+
+Approving a Request
+Switch to admin dashboard
+
+Approve the request to trigger Azure role assignment
+
+Rejecting a Request
+Reject with an optional reason
+
+🛠 Troubleshooting
+Issue	Solution
+USER_PRINCIPAL_ID not set	Set manually or implement email-to-ID lookup via Microsoft Graph
+RBAC assignment failed	Ensure service principal has "User Access Administrator" role
+Cosmos DB errors	Check connection string in .env
+CORS issues	Confirm backend has CORS enabled (dev mode allows all origins)
+
+📈 Success Criteria
+✅ Users can request access with proper validation
+
+✅ Admins can approve and assign Azure RBAC roles
+
+✅ Terraform successfully provisions infrastructure
+
+✅ Cosmos DB stores all access requests
+
+✅ Modern, responsive UI works across devices
+
+🙌 Acknowledgements
+Azure SDK for JavaScript
+
+Microsoft Learn & Docs
+
+Open source Terraform modules
+
